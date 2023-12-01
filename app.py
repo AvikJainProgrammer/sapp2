@@ -56,7 +56,7 @@ def get_response():
                         "vectorFields": [],
                     },
                     "inScope": True,
-                    "roleInformation": "You are an AI assistant that helps people find information. answer only if there is relevent documents is there",
+                    "roleInformation": "You are an AI assistant that helps people find information. answer only if there is relevent documents is there. Do not make up any information and answer strictly from the document. Do not provide full forms to any abbreviations which are not present in the document.",
                     "filter": None,
                     "embeddingEndpoint": None,
                     "embeddingKey": None,
@@ -108,7 +108,7 @@ def get_response():
         print("No 'citations' field found in the tool message content")
 
     # print(message)
-    url2 = url2.replace("/chatbot/", "/originaldocuments/") # change citiation url to original documents url 
+    url2 = url2.replace("/powergird2/", "/powergridorignaldocument/") # change citiation url to original documents url 
     return jsonify({"assistant_content": message + url2})
 
 if __name__ == "__main__":
