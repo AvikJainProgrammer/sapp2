@@ -77,6 +77,7 @@ def get_response():
     json_response = response.json()
 
     message = json_response["choices"][0]["messages"][1]["content"]
+    
 
     tool_message_content = json_response["choices"][0]["messages"][0]["content"]
 
@@ -88,6 +89,7 @@ def get_response():
     url2 = ""
     if "citations" in tool_message_content_dict:
         citations = tool_message_content_dict["citations"]
+        
 
         # Extracting the URL from the first citation if present
 
@@ -108,8 +110,9 @@ def get_response():
         print("No 'citations' field found in the tool message content")
 
     # print(message)
-    url2 = url2.replace("/powergird2/", "/powergridorignaldocument/") # change citiation url to original documents url 
+    url2 = url2.replace("/powergrid2/", "/powergridorignaldocument/") # change citiation url to original documents url 
     return jsonify({"assistant_content": message + url2})
+    
 
 if __name__ == "__main__":
     app.run()
