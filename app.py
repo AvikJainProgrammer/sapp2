@@ -110,7 +110,7 @@ def get_response():
         print("No 'citations' field found in the tool message content")
 
     # print(message)
-    url2 = url2.replace("/powergrid2/", "/powergridorignaldocument/") # change citiation url to original documents url 
+    url2 = url2.replace("/originaldocuments/", "/trainingdocuments/") # change citiation url to original documents url 
     return jsonify({"assistant_content": message + url2})
     
 
