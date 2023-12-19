@@ -48,34 +48,6 @@ def translate_text(text, target_language):
     
     return completion["choices"][0]["message"]["content"]
 
-# def translate_text(text, target_language):
-    
-#     url = OPENAI_URL
-#     headers = {
-#         "Content-Type": "application/json",
-#         "api-key": API_KEY,
-#     }
-
-#     body = {
-#         "messages": [
-#         {"role":"system","content":"You are an AI assistant that translates text. You only respond with the translated text"},
-#         {"role":"user","content":f"Translate the following test to {target_language} : {text}"}],
-#         "deployment": OPENAI_ENGINE,
-#         "temperature": 0,
-#         "top_p": 1,
-#         "max_tokens": 800,
-#         "stop": None,
-#         "stream": False,
-#     }
-
-#     response = requests.post(url, headers=headers, json=body)
-    
-#     json_response = response.json()
-
-#     print(json_response)
-
-#     return json_response["choices"][0]["message"]["content"]
-
 @app.route("/")
 def index():
     return f"<center><h1>Flask App deployment on AZURE</h1></center"
