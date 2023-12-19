@@ -42,10 +42,39 @@ def translate_text(text, target_language):
     top_p=0.95,
     frequency_penalty=0,
     presence_penalty=0,
-    stop=None
+    stop=None,
+    stream=False
     )
     
     return completion["choices"][0]["message"]["content"]
+
+# def translate_text(text, target_language):
+    
+#     url = OPENAI_URL
+#     headers = {
+#         "Content-Type": "application/json",
+#         "api-key": API_KEY,
+#     }
+
+#     body = {
+#         "messages": [
+#         {"role":"system","content":"You are an AI assistant that translates text. You only respond with the translated text"},
+#         {"role":"user","content":f"Translate the following test to {target_language} : {text}"}],
+#         "deployment": OPENAI_ENGINE,
+#         "temperature": 0,
+#         "top_p": 1,
+#         "max_tokens": 800,
+#         "stop": None,
+#         "stream": False,
+#     }
+
+#     response = requests.post(url, headers=headers, json=body)
+    
+#     json_response = response.json()
+
+#     print(json_response)
+
+#     return json_response["choices"][0]["message"]["content"]
 
 @app.route("/")
 def index():
@@ -145,7 +174,9 @@ def get_response():
 
     # print(message)
     url2 = url2.replace("/trainingdocuments/", "/originaldocuments/") #  change citiation url to original documents url 
-    return jsonify({"assistant_content": message + url2})
+
+
+    return jsonify({"assistant_content": message + " " +  url2})
     
 
 if __name__ == "__main__":
