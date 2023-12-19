@@ -31,8 +31,8 @@ def translate_text(text, target_language):
     openai.api_key = os.getenv("API_KEY")
 
     message_text = [
-        {"role":"system","content":"You are an AI assistant that translates text. You only respond with the translated text"},
-        {"role":"user","content":f"Translate the following test to {target_language} : {text}"}]
+        {"role":"system","content":"You are an AI assistant that translates text. You only respond with the translated text. You make sure that there are no spelling mistakes in your response."},
+        {"role":"user","content":f"Translate the following test to, please make sure that structure and meaing of the sentense is not changed {target_language} : {text}"}]
 
     completion = openai.ChatCompletion.create(
     engine="gopgpt35",
@@ -46,6 +46,7 @@ def translate_text(text, target_language):
     stream=False
     )
     
+
     return completion["choices"][0]["message"]["content"]
 
 @app.route("/")
@@ -110,6 +111,7 @@ def get_response():
 
     message = json_response["choices"][0]["messages"][1]["content"]
     
+
     if input_language == "pa":
         message = translate_text(message, "Punjabi")
 
@@ -146,7 +148,6 @@ def get_response():
 
     # print(message)
     url2 = url2.replace("/trainingdocuments/", "/originaldocuments/") #  change citiation url to original documents url 
-
 
     return jsonify({"assistant_content": message + " " +  url2})
     
