@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'azdogrcogsearchpunjabidev'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FBB084BAE496429AAA723B2AD188B64D }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_00C3F9C2E196482086175C467E9EA4B8 }}
