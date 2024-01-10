@@ -2,8 +2,6 @@ from flask import Flask, jsonify, request
 import json
 import requests
 import os
-import openai
-from langdetect import detect
 from dotenv import load_dotenv
 from flask_cors import CORS, cross_origin
 
@@ -24,31 +22,6 @@ COGNITIVE_SEARCH_ENDPOINT = os.getenv('COGNITIVE_SEARCH_ENDPOINT')
 COGNITIVE_SEARCH_KEY = os.getenv('COGNITIVE_SEARCH_KEY')
 COGNITIVE_SEARCH_INDEX_NAME = os.getenv('COGNITIVE_SEARCH_INDEX_NAME')
 
-def translate_text(text, target_language):
-    openai.api_type = "azure"
-    openai.api_base = "https://azdogropenaidev.openai.azure.com/"
-    openai.api_version = "2023-07-01-preview"
-    openai.api_key = os.getenv("API_KEY")
-
-    message_text = [
-        {"role":"system","content":"You are an AI assistant that translates text. You only respond with the translated text. You make sure that there are no spelling mistakes in your response."},
-        {"role":"user","content":f"Translate the following test to, please make sure that structure and meaing of the sentense is not changed {target_language} : {text}"}]
-
-    completion = openai.ChatCompletion.create(
-    engine="gopgpt35",
-    messages = message_text,
-    temperature=0,
-    max_tokens=800,
-    top_p=0.95,
-    frequency_penalty=0,
-    presence_penalty=0,
-    stop=None,
-    stream=False
-    )
-    
-
-    return completion["choices"][0]["message"]["content"]
-
 @app.route("/")
 def index():
     return f"<center><h1>Flask App deployment on AZURE</h1></center"
@@ -65,10 +38,6 @@ def get_response():
     user_input = request.get_json().get("message")
 
     input_language = detect(user_input)
-
-    # Translate input to English if it's in Punjabi
-    if input_language == "pa":
-        user_input = translate_text(user_input, "English")
 
     body = {
         "dataSources": [
@@ -110,11 +79,6 @@ def get_response():
     json_response = response.json()
 
     message = json_response["choices"][0]["messages"][1]["content"]
-    
-
-    if input_language == "pa":
-        message = translate_text(message, "Punjabi")
-
 
     tool_message_content = json_response["choices"][0]["messages"][0]["content"]
 
